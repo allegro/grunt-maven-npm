@@ -122,3 +122,7 @@ grunt.initConfig({
 `gruntMavenProperties.filesToWatch` evaluates to `/src/main/webapp/statics_dir/**`. If you need to exclude some resources from
 being watched (although you probably shouldn't need to), use `gruntMavenProperties.directoryToWatch`. This is simply path
 to directory without globing pattern appended, in our case: `/src/main/webapp/statics_dir`.
+
+## License
+
+**grunt-maven-plugin** NPM tasks are published under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
