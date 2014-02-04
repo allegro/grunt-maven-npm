@@ -9,6 +9,8 @@
 'use strict';
 
 var path = require('path');
+var MAVEN_PROPERTIES = 'maven-inner-properties.json';
+var MAVEN_PROPERTIES_OVERRIDES = 'maven-custom-inner-properties.json';
 
 module.exports = function(grunt) {
 
@@ -26,7 +28,9 @@ module.exports = function(grunt) {
     }
 
     function readMavenProperties(grunt) {
-        return readJSONWithCustomOverride(grunt, path.join(path.resolve('maven-tasks'), 'maven-inner-properties.json'), 'maven-custom-inner-properties.json');
+        var propertiesPath = path.join(path.resolve(process.cwd()), MAVEN_PROPERTIES);
+        var overridesPath = path.join(path.resolve(process.cwd()), MAVEN_PROPERTIES_OVERRIDES);
+        return readJSONWithCustomOverride(grunt, propertiesPath, overridesPath);
     }
 
     grunt.registerMultiTask('mavenPrepare', 'Grunt+Maven workflow task - prepare resources before running Grunt.', function() {
@@ -67,7 +71,7 @@ module.exports = function(grunt) {
         grunt.verbose.writeln('-> Maven exploded WAR directory: ' + mavenDistPath);
 
         grunt.verbose.subhead('Copying to Grunt dist');
-        grunt.file.expand({cwd: workPath}, ['**', '!' + config.dist, '!maven-tasks/**']).forEach(function(file) {
+        grunt.file.expand({cwd: workPath}, ['**', '!' + config.dist, '!maven-*-properties.json']).forEach(function(file) {
             var sourceFilePath = path.join(workPath, file);
 
             if (!grunt.file.isDir(sourceFilePath)) {

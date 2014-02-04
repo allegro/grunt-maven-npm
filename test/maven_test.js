@@ -24,7 +24,7 @@ var _ = require('lodash');
  */
 
 exports.maven = {
-    should_copy_all_using_properties_as_reference: function(test) {
+    should_prepare_grunt_dist_and_copy_to_maven_dist: function(test) {
         var expectedFiles = [
             'target-grunt/code.js',
             'target-grunt/css/style.css',
@@ -34,10 +34,46 @@ exports.maven = {
             'target/war/static/css/style.css',
         ];
 
-        test.expect(expectedFiles.length);
+        var invalidFiles = [
+            'target-grunt/dist/maven-inner-properties.json'
+        ];
+
+        test.expect(expectedFiles.length + invalidFiles.length);
 
         _.forEach(expectedFiles, function(file) {
             test.ok(grunt.file.exists('tmp/vanilla/' + file), 'Expected to see ' + file + ' in tmp/vanilla/, but none found.');
+        });
+
+        _.forEach(invalidFiles, function(file) {
+            test.ok(!grunt.file.exists('tmp/vanilla/' + file), 'Did not want to see ' + file + ' in tmp/vanilla/, but yet it was found.');
+        });
+
+        test.done();
+    },
+
+    should_prepare_grunt_dist_and_copy_to_maven_dist_with_overriden_properties: function(test) {
+        var expectedFiles = [
+            'target-grunt/code.js',
+            'target-grunt/css/style.css',
+            'target-grunt/dist/code.js',
+            'target-grunt/dist/css/style.css',
+            'overriden-target/war/static/code.js',
+            'overriden-target/war/static/css/style.css',
+        ];
+
+        var invalidFiles = [
+            'target-grunt/dist/maven-inner-properties.json',
+            'target-grunt/dist/maven-custom-inner-properties.json'
+        ];
+
+        test.expect(expectedFiles.length + invalidFiles.length);
+
+        _.forEach(expectedFiles, function(file) {
+            test.ok(grunt.file.exists('tmp/overrides/' + file), 'Expected to see ' + file + ' in tmp/overrides/, but none found.');
+        });
+
+        _.forEach(invalidFiles, function(file) {
+            test.ok(!grunt.file.exists('tmp/overrides/' + file), 'Did not want to see ' + file + ' in tmp/overrides/, but yet it was found.');
         });
 
         test.done();
