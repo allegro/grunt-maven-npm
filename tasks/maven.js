@@ -64,20 +64,21 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('mavenDist', 'Grunt+Maven workflow task - copy resources to Java dist after running Grunt.', function() {
         var mavenProperties = readMavenProperties(grunt);
         var config = this.options();
+        var gruntDistDir = config.gruntDistDir ? config.gruntDistDir : 'dist';
 
         grunt.verbose.subhead('Directories');
 
         var workPath = path.resolve(process.cwd());
         grunt.verbose.writeln('-> Grunt working directory: ' + workPath);
 
-        var gruntDistPath = path.resolve(config.gruntDistDir);
+        var gruntDistPath = path.resolve(gruntDistDir);
         grunt.verbose.writeln('-> Grunt dist directory: ' + gruntDistPath);
 
         var mavenDistPath = path.resolve(path.join(mavenProperties.targetPath, config.warName, mavenProperties.jsSourceDirectory));
         grunt.verbose.writeln('-> Maven exploded WAR directory: ' + mavenDistPath);
 
         var deliverables = Array.isArray(config.deliverables) ? config.deliverables : [config.deliverables];
-        deliverables.push('!' + config.gruntDistDir);
+        deliverables.push('!' + gruntDistDir);
         deliverables.push('!maven-*-properties.json');
         for(var i = 0; i < mavenProperties.filteredFiles.length; ++i) {
             deliverables.push('!' + mavenProperties.filteredFiles[i]);
