@@ -59,21 +59,29 @@ module.exports = function(grunt) {
         },
         mavenPrepare: {
             should_prepare_grunt_dist_and_copy_to_maven_dist: {
+                options: {
+                    resources: ['**']
+                }
             },
             should_prepare_grunt_dist_and_copy_to_maven_dist_with_overriden_properties: {
+                options: {
+                    resources: ['**']
+                }
             }
         },
         mavenDist: {
             should_prepare_grunt_dist_and_copy_to_maven_dist: {
                 options: {
                     warName: 'war',
-                    dist: 'dist'
+                    deliverables: ['**', '!non-deliverable.js'],
+                    gruntDistDir: 'dist'
                 }
             },
             should_prepare_grunt_dist_and_copy_to_maven_dist_with_overriden_properties: {
                 options: {
                     warName: 'war',
-                    dist: 'dist'
+                    deliverables: ['**'],
+                    gruntDistDir: 'dist'
                 }
             }
         },

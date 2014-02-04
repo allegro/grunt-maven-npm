@@ -3,5 +3,5 @@
     "targetPath": "../target",
     "sourceDirectory": "src",
     "jsSourceDirectory": "static",
-    "filteredFiles": []
+    "filteredFiles": ["maven-protected.json"]
 }

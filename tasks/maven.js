@@ -35,6 +35,7 @@ module.exports = function(grunt) {
 
     grunt.registerMultiTask('mavenPrepare', 'Grunt+Maven workflow task - prepare resources before running Grunt.', function() {
         var mavenProperties = readMavenProperties(grunt);
+        var config = this.options();
 
         grunt.verbose.subhead('Directories');
 
@@ -44,7 +45,12 @@ module.exports = function(grunt) {
         var targetPath = path.resolve(process.cwd());
         grunt.verbose.writeln('-> Grunt working directory: ' + targetPath).writeln();
 
-        grunt.file.expand({cwd: sourcePath}, '**').forEach(function(file) {
+        var resources = Array.isArray(config.resources) ? config.resources : [config.resources];
+        for(var i = 0; i < mavenProperties.filteredFiles.length; ++i) {
+            resources.push('!' + mavenProperties.filteredFiles[i]);
+        }
+
+        grunt.file.expand({cwd: sourcePath}, resources).forEach(function(file) {
             var sourceFilePath = path.join(sourcePath, file);
 
             if (!grunt.file.isDir(sourceFilePath)) {
@@ -64,14 +70,21 @@ module.exports = function(grunt) {
         var workPath = path.resolve(process.cwd());
         grunt.verbose.writeln('-> Grunt working directory: ' + workPath);
 
-        var gruntDistPath = path.resolve(config.dist);
+        var gruntDistPath = path.resolve(config.gruntDistDir);
         grunt.verbose.writeln('-> Grunt dist directory: ' + gruntDistPath);
 
         var mavenDistPath = path.resolve(path.join(mavenProperties.targetPath, config.warName, mavenProperties.jsSourceDirectory));
         grunt.verbose.writeln('-> Maven exploded WAR directory: ' + mavenDistPath);
 
+        var deliverables = Array.isArray(config.deliverables) ? config.deliverables : [config.deliverables];
+        deliverables.push('!' + config.gruntDistDir);
+        deliverables.push('!maven-*-properties.json');
+        for(var i = 0; i < mavenProperties.filteredFiles.length; ++i) {
+            deliverables.push('!' + mavenProperties.filteredFiles[i]);
+        }
+
         grunt.verbose.subhead('Copying to Grunt dist');
-        grunt.file.expand({cwd: workPath}, ['**', '!' + config.dist, '!maven-*-properties.json']).forEach(function(file) {
+        grunt.file.expand({cwd: workPath}, deliverables).forEach(function(file) {
             var sourceFilePath = path.join(workPath, file);
 
             if (!grunt.file.isDir(sourceFilePath)) {

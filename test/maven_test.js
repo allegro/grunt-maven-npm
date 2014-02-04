@@ -35,7 +35,9 @@ exports.maven = {
         ];
 
         var invalidFiles = [
-            'target-grunt/dist/maven-inner-properties.json'
+            'target-grunt/dist/maven-inner-properties.json',
+            'target-grunt/dist/non-deliverable.js',
+            'target-grunt/maven-protected.json'
         ];
 
         test.expect(expectedFiles.length + invalidFiles.length);
