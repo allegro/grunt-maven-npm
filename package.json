@@ -1,7 +1,7 @@
 {
   "name": "grunt-maven",
   "description": "Grunt tasks for grunt-maven-plugin Maven+Grunt workflow.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/allegro/grunt-maven-npm",
   "author": {
     "name": "Adam Dubiel"
