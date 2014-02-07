@@ -11,7 +11,7 @@ Add plugin dependency to your **package.json**:
 
 ```js
 "devDependencies": {
-  "grunt-maven": "~1.0.0",
+  "grunt-maven": "~1.1.0",
 }
 ```
 
