@@ -1,7 +1,6 @@
 /*
  * grunt-maven
  * https://github.com/adam/grunt-maven-npm
- *
  * Copyright (c) 2014 Adam Dubiel
  * Licensed under the Apache-2.0 license.
  */
@@ -9,8 +8,8 @@
 'use strict';
 
 var path = require('path');
-var MAVEN_PROPERTIES = 'maven-inner-properties.json';
-var MAVEN_PROPERTIES_OVERRIDES = 'maven-custom-inner-properties.json';
+var MAVEN_PROPERTIES = 'grunt-maven.json';
+var MAVEN_PROPERTIES_OVERRIDES = 'grunt-maven-custom.json';
 
 module.exports = function(grunt) {
 
@@ -79,7 +78,7 @@ module.exports = function(grunt) {
 
         var deliverables = Array.isArray(config.deliverables) ? config.deliverables : [config.deliverables];
         deliverables.push('!' + gruntDistDir);
-        deliverables.push('!maven-*-properties.json');
+        deliverables.push('!grunt-maven*.json');
         for(var i = 0; i < mavenProperties.filteredFiles.length; ++i) {
             deliverables.push('!' + mavenProperties.filteredFiles[i]);
         }
