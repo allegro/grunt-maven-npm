@@ -85,6 +85,12 @@ Type: `Array`
 List of patterns that will be evaluated using [minimatch](https://github.com/isaacs/minimatch) to choose deliverables that
 will be copied from `target-grunt/` to `target-grunt/dist` and to WAR.
 
+#### options.workingDirectory
+Type: `String`
+Default: Directory where gruntfile is located
+
+Deliverable patterns will be matched relative to this path, and all returned filepaths will also be relative to this path.
+
 #### options.gruntDistDir
 Type: `String`
 Default: `dist`

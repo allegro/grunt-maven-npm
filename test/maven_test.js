@@ -52,7 +52,6 @@ exports.maven = {
 
         test.done();
     },
-
     should_prepare_grunt_dist_and_copy_to_maven_dist_with_overriden_properties: function(test) {
         var expectedFiles = [
             'target-grunt/code.js',
@@ -79,5 +78,33 @@ exports.maven = {
         });
 
         test.done();
-    }
+    },
+    should_prepare_grunt_dist_and_copy_to_maven_dist_cwd: function(test) {
+        var expectedFiles = [
+            'target-grunt/code.js',
+            'target-grunt/css/style.css',
+            'target-grunt/dist/code.js',
+            'target-grunt/dist/css/style.css',
+            'target/war/static/code.js',
+            'target/war/static/css/style.css',
+        ];
+
+        var invalidFiles = [
+            'target-grunt/dist/grunt-maven-custom.json',
+            'target-grunt/dist/non-deliverable.js',
+            'target-grunt/maven-protected.json'
+        ];
+
+        test.expect(expectedFiles.length + invalidFiles.length);
+
+        _.forEach(expectedFiles, function(file) {
+            test.ok(grunt.file.exists('tmp/vanilla/' + file), 'Expected to see ' + file + ' in tmp/vanillaCwd/, but none found.');
+        });
+
+        _.forEach(invalidFiles, function(file) {
+            test.ok(!grunt.file.exists('tmp/vanilla/' + file), 'Did not want to see ' + file + ' in tmp/vanillaCwd/, but yet it was found.');
+        });
+
+        test.done();
+    },
 };

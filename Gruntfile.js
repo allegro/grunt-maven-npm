@@ -34,6 +34,22 @@ module.exports = function(grunt) {
                 src: ['**'],
                 dest: 'tmp/vanilla/'
             },
+            prepareVanillaCwd: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'test/fixture/vanilla/src/static',
+                        src: ['**'],
+                        dest: 'tmp/vanillaCwd/src/static/extrafolder'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'test/fixture/vanilla/target-grunt',
+                        src: ['**'],
+                        dest: 'tmp/vanillaCwd/target-grunt'
+                    }
+                ]
+            },
             prepareOverrides: {
                 expand: true,
                 cwd: 'test/fixture/overrides/',
@@ -45,6 +61,11 @@ module.exports = function(grunt) {
             chdirToVanilla: {
                 call: function() {
                     process.chdir('tmp/vanilla/target-grunt');
+                }
+            },
+            chdirToVanillaCwd: {
+                call: function() {
+                    process.chdir('tmp/vanillaCwd/target-grunt');
                 }
             },
             chdirToOverrides: {
@@ -64,6 +85,11 @@ module.exports = function(grunt) {
                     resources: ['**']
                 }
             },
+            should_prepare_grunt_dist_and_copy_to_maven_dist_cwd: {
+                options: {
+                    resources: ['**']
+                }
+            },
             should_prepare_grunt_dist_and_copy_to_maven_dist_with_overriden_properties: {
                 options: {
                     resources: ['**']
@@ -74,6 +100,14 @@ module.exports = function(grunt) {
             should_prepare_grunt_dist_and_copy_to_maven_dist: {
                 options: {
                     warName: 'war',
+                    deliverables: ['**', '!non-deliverable.js'],
+                    gruntDistDir: 'dist'
+                }
+            },
+            should_prepare_grunt_dist_and_copy_to_maven_dist_cwd: {
+                options: {
+                    warName: 'war',
+                    workingDirectory: 'extrafolder',
                     deliverables: ['**', '!non-deliverable.js'],
                     gruntDistDir: 'dist'
                 }
@@ -106,6 +140,13 @@ module.exports = function(grunt) {
         'execute:chdirReset'
     ]);
 
+    grunt.registerTask('testVanillaCwd', [
+        'execute:chdirToVanillaCwd',
+        'mavenPrepare:should_prepare_grunt_dist_and_copy_to_maven_dist_cwd',
+        'mavenDist:should_prepare_grunt_dist_and_copy_to_maven_dist_cwd',
+        'execute:chdirReset'
+    ]);
+
     grunt.registerTask('testOverrides', [
         'execute:chdirToOverrides',
         'mavenPrepare:should_prepare_grunt_dist_and_copy_to_maven_dist_with_overriden_properties',
@@ -113,7 +154,7 @@ module.exports = function(grunt) {
         'execute:chdirReset'
     ]);
 
-    grunt.registerTask('test', ['clean', 'copy', 'testVanilla', 'testOverrides', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'copy', 'testVanilla', 'testVanillaCwd', 'testOverrides', 'nodeunit']);
 
     grunt.registerTask('default', ['jshint', 'test']);
 
