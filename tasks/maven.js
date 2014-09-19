@@ -67,7 +67,7 @@ module.exports = function(grunt) {
 
         grunt.verbose.subhead('Directories');
 
-        var workPath = path.resolve(process.cwd());
+        var workPath = config.workingDirectory ? path.resolve(config.workingDirectory) : path.resolve(process.cwd());
         grunt.verbose.writeln('-> Grunt working directory: ' + workPath);
 
         var gruntDistPath = path.resolve(gruntDistDir);
