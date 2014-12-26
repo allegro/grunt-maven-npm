@@ -3,5 +3,6 @@
     "targetPath": "../target",
     "sourceDirectory": "src",
     "jsSourceDirectory": "static",
+    "warTargetDirectory": "warTarget",
     "filteredFiles": ["maven-protected.json"]
 }

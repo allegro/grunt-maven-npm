@@ -30,8 +30,8 @@ exports.maven = {
             'target-grunt/css/style.css',
             'target-grunt/dist/code.js',
             'target-grunt/dist/css/style.css',
-            'target/war/static/code.js',
-            'target/war/static/css/style.css',
+            'target/war/warTarget/code.js',
+            'target/war/warTarget/css/style.css',
         ];
 
         var invalidFiles = [
@@ -85,8 +85,8 @@ exports.maven = {
             'target-grunt/css/style.css',
             'target-grunt/dist/code.js',
             'target-grunt/dist/css/style.css',
-            'target/war/static/code.js',
-            'target/war/static/css/style.css',
+            'target/war/warTarget/code.js',
+            'target/war/warTarget/css/style.css',
         ];
 
         var invalidFiles = [

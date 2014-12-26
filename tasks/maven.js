@@ -73,7 +73,7 @@ module.exports = function(grunt) {
         var gruntDistPath = path.resolve(gruntDistDir);
         grunt.verbose.writeln('-> Grunt dist directory: ' + gruntDistPath);
 
-        var mavenDistPath = path.resolve(path.join(mavenProperties.targetPath, config.warName, mavenProperties.jsSourceDirectory));
+        var mavenDistPath = path.resolve(path.join(mavenProperties.targetPath, config.warName, mavenProperties.warTargetDirectory));
         grunt.verbose.writeln('-> Maven exploded WAR directory: ' + mavenDistPath);
 
         var deliverables = Array.isArray(config.deliverables) ? config.deliverables : [config.deliverables];
