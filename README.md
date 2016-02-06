@@ -1,5 +1,18 @@
 # grunt-maven
 
+## Deprecation note
+
+> **This plugin will no longer be maintained**. I can accept pull requests with some minor improvements and release new
+> versions, but there will be no active development.
+>
+> It has been almost two years since we moved from Maven to Gradle in most of our projects at Allegro. Since we don't use
+> the plugin nor even Maven, it is impossible to notice what new features are needed as frontend tools develop.
+>
+> If you are looking for a simple replacement, try [frontend-maven-plugin](https://github.com/eirslett/frontend-maven-plugin).
+
+---
+
+
 **npm** tasks for [grunt-maven-plugin](http://https://github.com/allegro/grunt-maven-plugin).
 
 **grunt-maven-plugin** NPM tasks power Maven+Grunt integrated workflow. These tasks depend on properties file produced
